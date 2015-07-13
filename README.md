@@ -1,2 +1,2 @@
 # Mytest
-This is a test file for matching
+This is a test file for wildcard matching

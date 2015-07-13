@@ -40,31 +40,24 @@
 // ...
 // Example:
 // 5 2
+
+/* Rules  */
 // *11*0110 drop
 // **1010** port1
 // 0011*110 port2
 // 0011010* port3
 // 10101100 port4
+
+/* Incoming packets  */
 // 01110110
 // 10001010
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-#define rule_count 5
+#define ruleCount 5
 
-struct RuleTable
-{
-	int q_maskrules[5];
-	int b_maskrules[5];
-	int MatchCount;
-	RuleTable(int q_mask, int b_mask, int count)
-	{
-		q_mask = q_maskrules[5];
-                b_mask = b_maskrules[5];
-		count = MatchCount;
-	}
-};
 
-struct rule
+
+struct rules
 {
 	int n;		/* number of rules */
 	int b;		/* width of rule pattern */
@@ -73,39 +66,49 @@ struct rule
 
 
 
-/* Parse the rules into maskrules   */
-void parse_qmasks(char ** rule_array, char * q_masks)
+/* Parse the rules into wildmask   */
+void parseWildmask(char ** ruleArray, char * wildMask)
 {
         /* Go through each character in the string line and map each char into mask format */
         
-        for(int i = 0; i < rule_count; ++i){
-		for(int j = 0; rule_array[i][j] != '\n'; ++j){
-                        if (rule_array[i][j] == '*') 
-                                q_masks[i] = '0'; 
+        for(int i = 0; i < ruleCount; ++i){
+		for(int j = 0; ruleArray[i][j] != '\n'; ++j){
+                        if (ruleArray[i][j] == '*') 
+                                wildMask[i] = '0'; 
                         else 
-                                q_masks[i] = '1';
+                                wildMask[i] = '1';
                 }
         }
 }
 
 
-/* Parse the rules into bitrules  */
-void parse_bmasks(char ** rule_array, char * b_masks) 
+/* Parse the rules into bitmask  */
+void parse_bmasks(char ** ruleArray, char * bitMask) 
 {
         /* Go through each character in the rules and map each bit into bitset the
          * corresponding bit in the b_mask array to 0 or 1  */
-        for(int i = 0; i < rule_count; ++i){
-                for(int j = 0; rule_array[i][j] != '\n'; ++j){
-                        if (rule_array[i][j] == '0' || rule_array[i][j]=='*') 
-                                        b_masks[i] = '0';
-                        if (rule_array[i][j] == '1')
-                                        b_masks[i] = '1';
+        for(int i = 0; i < ruleCount; ++i){
+                for(int j = 0; ruleArray[i][j] != '\n'; ++j){
+                        if (ruleArray[i][j] == '0' || ruleArray[i][j]=='*') 
+                                        bitMask[i] = '0';
+                        if (ruleArray[i][j] == '1')
+                                        bitMask[i] = '1';
                 }
         }
 }
 
 
-
+struct ClusterTable
+{
+	int wildMask[5];
+	int bitMask[5];
+	int MatchCount;
+	ClusterTable(int wildMask, int bitMask, int count)
+	{
+		
+		count = MatchCount;
+	}
+};
 
 
 /* Read the rules from an input file  */
@@ -127,23 +130,18 @@ int main(int argc, char* argv[])
 	{
 		std::cout << "Unable to open file" << std::endl << std::endl;
 	}
-
-char ** rule_array = char * line[10];
-
-/* Convert the * to 0 / 1  */
-	char * t1 = new char[8];
-        //parse_qmasks(* rule_array, t1);
-	char * t2 = new char[8];
-	//parse_bmasks(** rule_array, t2);
-
-
 	
-/* convert the string rules to bit rules  */       
-
-
-       
-      		
+	
+	
+	
+	
+	
+	
+	
+	
 }
+
+   
 
 
 

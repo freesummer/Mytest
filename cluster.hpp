@@ -9,34 +9,40 @@
 //*****************************************************************
  
 
- 
+#ifndef CLUSTER_H_
+#define CLUSTER_H_
 
  
 //*****************************************************************
 // 
 //*****************************************************************
-class ClusterTable
+class ruleMapping
+
+{
+public:
+
+	void parseBitmask();
+	void parseWildmask();
+}
+
+class clusterTable
 {
 
 public:
-// Constructs the empty Table object.
 
-
-table_dim (uint64_t table_d, uint64_t table_len);
-
-// Adds an item to the cluster Table.
-
-void insertItem( Item * newItem );
-
-
-
-
-
-
+	void insertBitmask();
+	void insertWildmask();
+	void updateRule();
 
 };
+
+void matchRule();
+
+
+
+
  
-//#endif
+#endif
  
 //*****************************************************************
 // End of File
