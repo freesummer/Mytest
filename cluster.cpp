@@ -67,32 +67,32 @@ struct rules
 
 
 /* Parse the rules into wildmask   */
-void parseWildmask(char ** ruleArray, char * wildMask)
+void parseWildmask(char ** ruleArray, char ** wildMask)
 {
         /* Go through each character in the string line and map each char into mask format */
         
         for(int i = 0; i < ruleCount; ++i){
 		for(int j = 0; ruleArray[i][j] != '\n'; ++j){
                         if (ruleArray[i][j] == '*') 
-                                wildMask[i] = '0'; 
+                                wildMask[i][i] = '0'; 
                         else 
-                                wildMask[i] = '1';
+                                wildMask[i][j] = '1';
                 }
         }
 }
 
 
 /* Parse the rules into bitmask  */
-void parse_bmasks(char ** ruleArray, char * bitMask) 
+void parse_bmasks(char ** ruleArray, char ** bitMask) 
 {
         /* Go through each character in the rules and map each bit into bitset the
          * corresponding bit in the b_mask array to 0 or 1  */
         for(int i = 0; i < ruleCount; ++i){
                 for(int j = 0; ruleArray[i][j] != '\n'; ++j){
                         if (ruleArray[i][j] == '0' || ruleArray[i][j]=='*') 
-                                        bitMask[i] = '0';
+                                        bitMask[i][j] = '0';
                         if (ruleArray[i][j] == '1')
-                                        bitMask[i] = '1';
+                                        bitMask[i][j] = '1';
                 }
         }
 }
@@ -117,12 +117,14 @@ int main(int argc, char* argv[])
 {
 	std::string line;
 	std::ifstream policy ("test.txt", std::ifstream::in);
+	vector<string> lines;    // a vector container
 	if (policy.is_open())
 	{
 		while (policy.good())
 		{
 			getline(policy,line);
 			std::cout << line << std::endl;
+			lines.push_back(line);
 		}
 		policy.close();
 	}
@@ -131,6 +133,18 @@ int main(int argc, char* argv[])
 		std::cout << "Unable to open file" << std::endl << std::endl;
 	}
 	
+	int row = 5;
+	int length = 50;
+	char ** ruleArray = new char* [row];
+		for(int i=0; i < row; i++) {
+			ruleArray[i] = new char* [50];	
+		}
+	
+		for(int j = 0; j < lines.size(); j++) {
+			for(int i = 0; i < lines[j].size(); i++){
+				ruleArray[j][i] = lines[j][i];
+			}
+		}
 	
 	
 	
