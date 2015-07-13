@@ -133,9 +133,9 @@ int main(int argc, char* argv[])
 	{
 		std::cout << "Unable to open file" << std::endl << std::endl;
 	}
-	
-	int row = 5;
-	int length = 50;
+/* pass the data from input file to the original rule table.  */	
+	int row = 5;        // number of rules
+	int length = 50;    // the length of each rule
 	char ** ruleArray = new char* [row];
 		for(int i = 0; i < row; i++) {
 			ruleArray[i] = new char* [50];	
