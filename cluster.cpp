@@ -18,6 +18,7 @@
 #include <fstream>
 #include <string>
 
+using namespace std;
 
 /////////// Description ///////////////////////////////////////////////////////////////////////////////////////////////
 // Program uses a clustering algorithm to divide the multidimention fields into separate subsets
@@ -136,20 +137,17 @@ int main(int argc, char* argv[])
 	int row = 5;
 	int length = 50;
 	char ** ruleArray = new char* [row];
-		for(int i=0; i < row; i++) {
+		for(int i = 0; i < row; i++) {
 			ruleArray[i] = new char* [50];	
 		}
 	
-		for(int j = 0; j < lines.size(); j++) {
-			for(int i = 0; i < lines[j].size(); i++){
+		for(int j = 0; j < row; j++) {
+			for(int i = 0; lines[j][i] != '\n'; i++){
 				ruleArray[j][i] = lines[j][i];
 			}
 		}
-	
-	
-	
-	
-	
+		cout << ruleArray << endl;
+		
 	
 	
 	
