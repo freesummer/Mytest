@@ -1,14 +1,6 @@
 ///////////////////////////////////// 
 
-// File Name : cluster-based packet classification
-
-// Purpose : optimize packet classification
-
-// Creation Date : 07-09-2015
-
-// Last Modified : <modified_date>
-
-// Created By : Ping Wang 
+// File Name : wildcard matching
 
 //////////////////////////////////////
 #include <string>
@@ -21,27 +13,13 @@
 using namespace std;
 
 /////////// Description ///////////////////////////////////////////////////////////////////////////////////////////////
-// Program uses a clustering algorithm to divide the multidimention fields into separate subsets
-// and then do bitmap intersection lookup between these tables
-// the function includes: insert rules, update rules, and matching
-// implement arbitrary pattern matching
-// performance evaluation: memory space, search time and update time
-// tradeoff between memory and time 
-
+// Program maps the arbitrary wildcard rules (includes '0', '1', and '*') into two different parts: bitMask, and wildMask.
+// bitMask: parse the '*' and '0' into '0', the '1' into '1'.
+// wildMask: parse the '*' into '0', the '0' and '1' into '1'.
+// ruleMatch: Bool (Incoming packet && wildMask == bitMask), if true, then match, if false, don't match
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////// Input File Format ////////////////////////////////////////////////////////////////////////////////////////////
-// Format:
-// <NUMBER OF INSERTIONS(RULES)> <NUMBER OF SEARCHES>
-// <ARBITRARY_PATTERN(8 bit stream)> <ACTION>
-// ....
-// ....
-// <8 bit stream for arbitrary match>
-// ...
-// ...
-// Example:
-// 5 2
-
 /* Rules  */
 // *11*0110 drop
 // **1010** port1
@@ -68,9 +46,9 @@ struct rules
 
 
 /* Parse the rules into wildmask   */
-void parseWildmask(char ** ruleArray, char ** wildMask)
+void parseWildmask(char** ruleArray, char** wildMask)
 {
-        /* Go through each character in the string line and map each char into mask format */
+        /* Go through each character in the string line and map each char into wildmask */
         
         for(int i = 0; i < ruleCount; ++i){
 		for(int j = 0; ruleArray[i][j] != '\n'; ++j){
@@ -84,10 +62,9 @@ void parseWildmask(char ** ruleArray, char ** wildMask)
 
 
 /* Parse the rules into bitmask  */
-void parse_bmasks(char ** ruleArray, char ** bitMask) 
+void parseBitmasks(char** ruleArray, char** bitMask) 
 {
-        /* Go through each character in the rules and map each bit into bitset the
-         * corresponding bit in the b_mask array to 0 or 1  */
+        /* Go through each character in the rules and map each bit into bitmask*/
         for(int i = 0; i < ruleCount; ++i){
                 for(int j = 0; ruleArray[i][j] != '\n'; ++j){
                         if (ruleArray[i][j] == '0' || ruleArray[i][j]=='*') 
@@ -97,19 +74,6 @@ void parse_bmasks(char ** ruleArray, char ** bitMask)
                 }
         }
 }
-
-
-struct ClusterTable
-{
-	int wildMask[5];
-	int bitMask[5];
-	int MatchCount;
-	ClusterTable(int wildMask, int bitMask, int count)
-	{
-		
-		count = MatchCount;
-	}
-};
 
 
 /* Read the rules from an input file  */
@@ -138,7 +102,7 @@ int main(int argc, char* argv[])
 
 	int row = 5;        // number of rules
 	int length = 50;    // the length of each rule
-	char** ruleArray = new char*[row];
+	char** ruleArray = new char* [row];
 	for(int i = 0; i < row; ++i) 
 			ruleArray[i] = new char[50];
 	
@@ -148,12 +112,7 @@ int main(int argc, char* argv[])
 			ruleArray[j][i] = lines[j][i];
 			
 	
-	
-	//cout << lines << endl;
-	//cout << ruleArray << endl;
-		
-	
-	
+
 	
 }
 
