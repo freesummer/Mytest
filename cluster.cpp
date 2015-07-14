@@ -138,17 +138,19 @@ int main(int argc, char* argv[])
 
 	int row = 5;        // number of rules
 	int length = 50;    // the length of each rule
-	char ** ruleArray = new char * [row];
-		for(int i = 0; i < row; ++i) {
-			ruleArray[i] = new char* [50];	
-		}
+	char** ruleArray = new char*[row];
+	for(int i = 0; i < row; ++i) 
+			ruleArray[i] = new char[50];
 	
-		for(int j = 0; j < row; ++j) {
-			for(int i = 0; lines[j][i] != '\n'; ++i){
-				ruleArray[j][i] = lines[j][i];
-			}
-		}
-		cout << ruleArray << endl;
+
+	for(int j = 0; j < row; ++j) 
+		for(int i = 0; lines[j][i] != '\n'; ++i) 
+			ruleArray[j][i] = lines[j][i];
+			
+	
+	
+	//cout << lines << endl;
+	//cout << ruleArray << endl;
 		
 	
 	
