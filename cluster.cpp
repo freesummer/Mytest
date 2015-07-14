@@ -9,6 +9,9 @@
 #include <bitset>
 #include <fstream>
 #include <string>
+#include <iterator>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -32,6 +35,7 @@ using namespace std;
 // 10001010
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
 #define ruleCount 5
 
 
@@ -53,7 +57,7 @@ void parseWildmask(char** ruleArray, char** wildMask)
         for(int i = 0; i < ruleCount; ++i){
 		for(int j = 0; ruleArray[i][j] != '\n'; ++j){
                         if (ruleArray[i][j] == '*') 
-                                wildMask[i][i] = '0'; 
+                                wildMask[i][j] = '0'; 
                         else 
                                 wildMask[i][j] = '1';
                 }
@@ -75,45 +79,58 @@ void parseBitmasks(char** ruleArray, char** bitMask)
         }
 }
 
+/*   */
 
-/* Read the rules from an input file  */
 
 int main(int argc, char* argv[])
 {
-	std::string line;
-	std::ifstream policy ("test.txt", std::ifstream::in);
-	vector<string> lines;    // a vector container
-	if (policy.is_open())
-	{
-		while (policy.good())
-		{
-			getline(policy,line);
-			std::cout << line << std::endl;
-			lines.push_back(line);
-		}
-		policy.close();
-	}
-	else
-	{
-		std::cout << "Unable to open file" << std::endl << std::endl;
-	}
+
+/* Read the rules from an input file  */
+	string line;
+	ifstream file ("test.txt");
 	
-/* pass the data from input file to the original rule table.  */	
+	string ruleArray[5];
+
+	int i = 0;
+ 	if(file.is_open()) {
+	
+      	while(!file.eof()) {
+			getline(file, line);  /*  Read lines as long as the file is */
+			ruleArray[i] = line;
+			i++;
+		}
+
+	}
+
+	file.close();
+
+	for(int j = 0; ruleArray[j] != "\0"; j++) {
+		cout << ruleArray[j] << endl;  /* get the ruleArray information */
+	}
 
 	int row = 5;        // number of rules
 	int length = 50;    // the length of each rule
-	char** ruleArray = new char* [row];
+	char **wildMask = new char* [row];
 	for(int i = 0; i < row; ++i) 
-			ruleArray[i] = new char[50];
+			wildMask[i] = new char[50];
+
+
+	void parseWildmask(char** ruleArray, char** wildMask);
+
+	cout << wildMask[i] << endl;
+
+	char **bitMask = new char* [row];
+	for(int i = 0; i < row; ++i) 
+			bitMask[i] = new char[50];
+	
+	void parseBitmasks(char** ruleArray, char** bitMask);
+
+	cout << bitMask[i] << endl;
+
+
 	
 
-	for(int j = 0; j < row; ++j) 
-		for(int i = 0; lines[j][i] != '\n'; ++i) 
-			ruleArray[j][i] = lines[j][i];
-			
-	
-
-	
+	return 0;	
 }
 
    
